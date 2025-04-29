@@ -78,6 +78,9 @@ Furthermore, our research complies with the academic research exemptions outline
 
 Additionally, we follow the GDPR’s principle of data minimization by focusing solely on English textual content from public posts, ensuring that only the information necessary for our research objectives is processed ([Data protection under GDPR](https://europa.eu/youreurope/business/dealing-with-customers/dataprotection/data-protection-gdpr/index_en.htm), accessed 2025-01-27). Finally, as the dataset includes channels and groups that discuss controversial topics, it may contain some controversial messages.
 
+## License
+This project is licensed under the [CC BY-NC-ND 4.0](http://creativecommons.org/licenses/by-nc-nd/4.0/) license.
 
 
+[![License: CC BY-NC-ND 4.0](https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
 
