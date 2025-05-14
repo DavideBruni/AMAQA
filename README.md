@@ -6,6 +6,10 @@ AMAQA is a high-quality, metadata-enriched Question-Answer dataset designed for 
 ## Repository Structure
 - `data/` - Contains the full dataset, split into 10 `.ndjson` files.
 - `AMAQA_QA.csv` - A CSV file containing Question-Answer pairs.
+- `prompts.txt` - A txt file containg the prompts used for the topic extraction tasks and the QA creation process
+
+### Warning:
+> ⚠️ Within the prompts used, there are potentially offensive and defamatory terms, as well as information that may not be accurate. It was necessary to include such terms and phrases to ensure the LLMs generated outputs containing toxic content and/or statements not necessarily grounded in truth, but based on data collected from Telegram.
 
 ## Data Structure
 Each `.ndjson` file contains multiple entries in the following format:
