@@ -1,7 +1,7 @@
 # AMAQA: A Metadata-based QA Dataset for RAG Systems
 
 ## Overview
-AMAQA is a high-quality, metadata-enriched Question-Answer dataset designed for Retrieval-Augmented Generation (RAG) systems. It contains about 1.1 million English Telegram messages collected from 26 public groups, enriched with their metadata, and 450 High quality Question-Answers.
+AMAQA is a high-quality, metadata-enriched Question-Answer dataset designed for Retrieval-Augmented Generation (RAG) systems. It includes about 1.1 million English messages collected from 26 public Telegram groups, enriched with metadata such as timestamps and chat names. It also contains 20,000 hotel reviews with metadata. In addition, the dataset provides 2600 high-quality QA pairs built across both domains, Telegram messages and hotel reviews, making AMAQA a valuable resource for advancing research on metadata-driven QA and RAG systems.
 
 ## Repository Structure
 - `data/` - Contains the full dataset, split into 10 `.ndjson` files.
