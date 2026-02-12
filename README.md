@@ -13,11 +13,11 @@ data/
 │
 ├── telegram/
 │   ├── *.jsonl
-│   └── DATA_STRUCTURE.md
+│   └── README.md
 │
 └── hotel_reviews/
-    └── *.jsonl
-    └── DATA_STRUCTURE.md
+    └── hotel_reviews.csv
+    └── README.md
 
 benchmark/
 │
@@ -34,14 +34,14 @@ Contains the full dataset divided by domain:
 * **`telegram/`**
 
   * Contains Telegram messages stored as `.jsonl` files.
-  * Includes a `DATA_STRUCTURE.md` file describing the JSON files.
+  * Each `.jsonl` file contains one JSON object per line.
+  * Includes a `README.md` file describing the JSON files.
 
 * **`hotel_reviews/`**
 
-  * Contains hotel reviews stored as `.jsonl` files.
-  * Includes a `DATA_STRUCTURE.md` file describing the JSON schema.
+  * Contains hotel reviews stored as `.csv` file.
+  * Includes a `README.md` file describing the CSV schema.
 
-Each `.jsonl` file contains one JSON object per line.
 
 > ⚠️ Note: The detailed description of the JSON structures are provided in `data/telegram/DATA_STRUCTURE.md` and `data/hotel_reviews/DATA_STRUCTURE.md`.
 
