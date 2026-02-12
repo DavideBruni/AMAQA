@@ -1,90 +1,127 @@
 # AMAQA: A Metadata-based QA Dataset for RAG Systems
 
 ## Overview
-AMAQA is a high-quality, metadata-enriched Question-Answer dataset designed for Retrieval-Augmented Generation (RAG) systems. It includes about 1.1 million English messages collected from 26 public Telegram groups, enriched with metadata such as timestamps and chat names. It also contains 20,000 hotel reviews with metadata. In addition, the dataset provides 2600 high-quality QA pairs built across both domains, Telegram messages and hotel reviews, making AMAQA a valuable resource for advancing research on metadata-driven QA and RAG systems.
+
+AMAQA is a high-quality, metadata-enriched Question-Answer dataset designed for Retrieval-Augmented Generation (RAG) systems. It includes about 1.1 million English messages collected from 26 public Telegram groups, enriched with metadata such as timestamps and chat names. It also contains 20,000 hotel reviews with metadata. In addition, the dataset provides 2600 high-quality QA pairs built across both domains — Telegram messages and hotel reviews — making AMAQA a valuable resource for advancing research on metadata-driven QA and RAG systems.
+
+---
 
 ## Repository Structure
-- `data/` - Contains the full dataset, split into 10 `.ndjson` files.
-- `AMAQA_QA.csv` - A CSV file containing Question-Answer pairs.
-- `prompts.txt` - A txt file containg the prompts used for the topic extraction tasks and the QA creation process
+
+```
+data/
+│
+├── telegram/
+│   ├── *.jsonl
+│   └── DATA_STRUCTURE.md
+│
+└── hotel_reviews/
+    └── *.jsonl
+    └── DATA_STRUCTURE.md
+
+benchmark/
+│
+├── qa_hotel_reviews.csv
+├── qa_hotel_reviews_meta.csv
+├── qa_telegram.csv
+└── qa_telegram_meta.csv
+```
+
+### `data/`
+
+Contains the full dataset divided by domain:
+
+* **`telegram/`**
+
+  * Contains Telegram messages stored as `.jsonl` files.
+  * Includes a `DATA_STRUCTURE.md` file describing the JSON files.
+
+* **`hotel_reviews/`**
+
+  * Contains hotel reviews stored as `.jsonl` files.
+  * Includes a `DATA_STRUCTURE.md` file describing the JSON schema.
+
+Each `.jsonl` file contains one JSON object per line.
+
+> ⚠️ Note: The detailed description of the JSON structures are provided in `data/telegram/DATA_STRUCTURE.md` and `data/hotel_reviews/DATA_STRUCTURE.md`.
+
+---
+
+## Benchmark Folder
+
+The `benchmark/` folder contains the Question-Answer pairs used for evaluation.
+
+### Files
+
+* `qa_hotel_reviews.csv`
+* `qa_hotel_reviews_meta.csv`
+* `qa_telegram.csv`
+* `qa_telegram_meta.csv`
+
+Each CSV file contains the following columns:
+
+| Column         | Description                                                         |
+| -------------- | ------------------------------------------------------------------- |
+| `question`     | The natural language question.                                      |
+| `answer`       | The ground-truth answer.                                            |
+| `relevant_doc` | The full text of the document from which the answer can be derived. |
+| `doc_id`       | The unique identifier of the relevant document within the dataset.  |
+
+### Answer within text or within metadata
+
+* Files **without** `_meta` in the name:
+
+  * The answer is contained in the **text** of the relevant document.
+
+* Files **with** `_meta` in the name:
+
+  * The answer is found in the **metadata** of the relevant document rather than in the main text.
+
+---
+
+## Prompts
+
+* `prompts.txt`
+  Contains the prompts used for topic extraction tasks and QA creation.
 
 ### Warning:
-> ⚠️ Within the prompts used, there are potentially offensive and defamatory terms, as well as information that may not be accurate. It was necessary to include such terms and phrases to ensure the LLMs generated outputs containing toxic content and/or statements not necessarily grounded in truth, but based on data collected from Telegram.
 
-## Data Structure
-Each `.ndjson` file contains multiple entries in the following format:
+> ⚠️ The prompts used during dataset construction may contain potentially offensive or defamatory terms. These were necessary to induce the generation of toxic or controversial content reflective of real-world Telegram discussions.
 
-```json
-{
-  "text": "This is the text of the message",
-  "metadata": {
-    "date": "2024-07-28 00:00:00",
-    "is_forwarded": false,
-    "has_media": false,
-    "was_edited": false,
-    "reactions": "reactions": {
-      "_": "MessageReactions",
-      "reactions": [
-        {
-          "_": "Reaction",
-          "emoji": "💯",
-          "count": 2
-        }
-      ]
-    },
-    "reactions_count": 2,
-    "chat_name": "This is the name of the group chat"
-  },
-  "ground_truth": {
-    "toxicity": 0.013005874,
-    "profanity": 0.013268576,
-    "insult": 0.008044879,
-    "identity_attack": 0.0029968263,
-    "threat": 0.007029374,
-    "emotion": "neutral",
-    "topics": ["Topic1", "Topic2"]
-  }
+---
+
+## Ethical Considerations
+
+The data collection was conducted with care to include only information from public Telegram channels and groups, explicitly excluding personal data such as usernames, phone numbers, user IDs, and chat IDs. The process aligns with Telegram’s Terms of Service and Telegram API’s Terms of Service, as neither prohibits the collection of public chat data.
+
+Our research complies with the academic research exemptions outlined in Article 85 of the GDPR, which provide flexibility for processing publicly available data in the interest of freedom of expression and academic purposes.
+
+We follow the GDPR’s principle of data minimization by focusing solely on English textual content from public posts. However, as the dataset includes channels discussing controversial topics, it may contain controversial or sensitive messages.
+
+---
+
+## Citation
+
+If you use AMAQA in your research, please cite:
+
+```bibtex
+@misc{bruni2025amaqametadatabasedqadataset,
+      title={AMAQA: A Metadata-based QA Dataset for RAG Systems}, 
+      author={Davide Bruni and Marco Avvenuti and Nicola Tonellotto and Maurizio Tesconi},
+      year={2025},
+      eprint={2505.13557},
+      archivePrefix={arXiv},
+      primaryClass={cs.IR},
+      url={https://arxiv.org/abs/2505.13557}, 
 }
 ```
 
-### Fields Description
-- **text**: The message content.
-- **metadata**:
-  - `date`: Timestamp of the message.
-  - `is_forwarded`: Boolean indicating if the message was forwarded.
-  - `has_media`: Boolean indicating if the message contains media.
-  - `was_edited`: Boolean indicating if the message was edited.
-  - `reactions`: Contains a list of reactions to the message (if available), where each reaction includes: the emoji used for the reaction and the number of times this reaction was added.
-  - `reactions_count`: Total count of reactions.
-  - `chat_name`: Name of the chat where the message was posted.
-- **ground_truth**:
-  - `toxicity`: The probability that the content is considered toxic. Score provided by [Perspective API](https://perspectiveapi.com/).
-  - `profanity`: The probability that the content contains profanity. Score provided by Perspective API.
-  - `insult`: The probability that the content contains an insult. Score provided by Perspective API.
-  - `identity_attack`: The probability that the content includes an identity attack. Score provided by Perspective API.
-  - `threat`: The probability that the content is a threat. Score provided by Perspective API.
-  - `emotion`: Emotion of the text.
-  - `topics`: List of topics (if any).
-
-## CSV File Structure (`AMAQA_QA.csv`)
-The CSV file contains structured Question-Answer pairs with relevant document references.
-
-| ID  | Question | Answer | Relevant Document |
-|-----|----------|--------|------------------|
-| 1   | What is truth? | Truth is... | Text of the message from which the answer is extracted |
-
-
-## Ethical consideration
-
-The data collection was conducted with care to include only information from public Telegram channels and groups, explicitly excluding personal data such as usernames, phone numbers, user IDs, and chat IDs. The process aligns with Telegram’s Terms of Service ([Telegram Terms of Service](https://telegram.org/tos/), accessed 2025-01-27) and Telegram API’s Terms of Service ([Telegram API Terms of Service](https://core.telegram.org/api/terms), accessed 2025-01-27), as neither prohibits the collection of public chat data. We have also taken care to avoid flooding the platform with excessive requests during data collection.
-
-Furthermore, our research complies with the academic research exemptions outlined in Article 85 of the GDPR ([Article 85 GDPR](https://gdpr-text.com/read/article-85/), accessed 2025-01-27), which provide flexibility for processing publicly available data in the interest of freedom of expression and academic purposes. Since our work exclusively involves publicly accessible content and does not handle private user data, it qualifies for legitimate or public interest exemptions. 
-
-Additionally, we follow the GDPR’s principle of data minimization by focusing solely on English textual content from public posts, ensuring that only the information necessary for our research objectives is processed ([Data protection under GDPR](https://europa.eu/youreurope/business/dealing-with-customers/dataprotection/data-protection-gdpr/index_en.htm), accessed 2025-01-27). Finally, as the dataset includes channels and groups that discuss controversial topics, it may contain some controversial messages.
+---
 
 ## License
-This project is licensed under the [CC BY-NC-ND 4.0](http://creativecommons.org/licenses/by-nc-nd/4.0/) license.
 
+This project is licensed under the [CC BY-NC-ND 4.0](http://creativecommons.org/licenses/by-nc-nd/4.0/) license.
 
 [![License: CC BY-NC-ND 4.0](https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
 
+---
