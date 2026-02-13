@@ -105,10 +105,10 @@ We follow the GDPR’s principle of data minimization by focusing solely on Engl
 If you use AMAQA in your research, please cite:
 
 ```bibtex
-@misc{bruni2025amaqametadatabasedqadataset,
+@misc{bruni2026amaqametadatabasedqadataset,
       title={AMAQA: A Metadata-based QA Dataset for RAG Systems}, 
       author={Davide Bruni and Marco Avvenuti and Nicola Tonellotto and Maurizio Tesconi},
-      year={2025},
+      year={2026},
       eprint={2505.13557},
       archivePrefix={arXiv},
       primaryClass={cs.IR},
